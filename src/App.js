@@ -8,6 +8,7 @@ import MovieList from "./components/Main/MovieList";
 import Box from "./components/Main/Box";
 import WatchedSummary from "./components/Main/WatchedSummary";
 import WatchedMovieList from "./components/Main/WatchedMovieList";
+import StarRating from "./components/StarRating";
 const tempMovieData = [
   {
     imdbID: "tt1375666",
@@ -62,6 +63,8 @@ export default function App() {
 
   return (
     <>
+      <StarRating maxRating={5} />
+      <StarRating maxRating={10} />
       <Navbar>
         <Logo />
         <Search />
