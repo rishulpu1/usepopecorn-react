@@ -1,6 +1,13 @@
 import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Main from "./components/Main";
+import Logo from "./components/Navbar/Logo";
+import Search from "./components/Navbar/Search";
+import NumResults from "./components/Navbar/NumResults";
+import MovieList from "./components/Main/MovieList";
+import Box from "./components/Main/Box";
+import WatchedSummary from "./components/Main/WatchedSummary";
+import WatchedMovieList from "./components/Main/WatchedMovieList";
 const tempMovieData = [
   {
     imdbID: "tt1375666",
@@ -47,20 +54,37 @@ const tempWatchedData = [
     userRating: 9,
   },
 ];
-
+const average = (arr) =>
+  arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 export default function App() {
   const [watched, setWatched] = useState(tempWatchedData);
   const [movies, setMovies] = useState(tempMovieData);
 
   return (
     <>
-      <Navbar tempMovieData={tempMovieData} movies={movies} />
-      <Main
-        tempMovieData={tempMovieData}
-        movies={movies}
-        tempWatchedData={tempWatchedData}
-        watched={watched}
-      />
+      <Navbar>
+        <Logo />
+        <Search />
+        <NumResults movies={movies} />
+      </Navbar>
+      <Main>
+        <Box>
+          <ul className="list">
+            {movies?.map((movie) => (
+              <MovieList movie={movie} key={movie.imdbID} />
+            ))}
+          </ul>
+        </Box>
+
+        <Box>
+          <WatchedSummary watched={watched} average={average} />
+          <ul className="list">
+            {watched.map((movie) => (
+              <WatchedMovieList movie={movie} key={movie.imdbID} />
+            ))}
+          </ul>
+        </Box>
+      </Main>
     </>
   );
 }
